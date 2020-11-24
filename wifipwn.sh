@@ -16,6 +16,43 @@ mygithub="https://github.com/rustywolf021"
 userpath="$USER"
 loop=0
 
+function checkroot()
+{
+	if [ $(id -u) != "0" ]; then
+		echo ""
+		echo You need to be root to run this script...
+		echo Please start R.Deauth with [sudo ./start.sh]
+		exit
+	else
+		echo "Root user detected :)"
+		sleep 1
+		clear
+	fi
+}
+
+function checktools()
+{
+	echo -e $lgreen"Checking if tools are installed..."
+	echo ""
+	sleep 2
+	mdk3tool=`which mdk3`
+	if [[ "$?" != "0" ]]; then
+		echo -e $lred"mdk3 not found need to install..."
+		mdk3tool="not installed"
+	fi
+	airmonngtool=`which airmon-ng`
+	if [[ "$?" != "0" ]]; then
+		echo -e $lred"airmon-ng not found need to install..."
+		airmonngtool="not installed"
+	fi
+	xtermtool=`which xterm`
+	if [[ "$?" != "0" ]]; then
+		echo -e $lred"xterm not found need to install..."
+		xterm="not installed"
+	fi
+	clear
+}
+
 function exitscript()
 {
 	echo ""
@@ -103,6 +140,9 @@ function wpacracker()
 		fi
 	done
 }
+
+checkroot
+checktools
 
 while :
 do
